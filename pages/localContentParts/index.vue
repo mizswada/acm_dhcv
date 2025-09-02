@@ -20,12 +20,16 @@
                    v-model="form.partNo"
                    placeholder="Enter part number"
                    readonly
+                   @focus="partNoFocused = true"
+                   @blur="partNoFocused = false"
                  >
                    <template #suffix>
                      <button
+                       v-if="partNoFocused"
                        type="button"
                        class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded mr-1"
                        @click="openPartModal"
+                       @mousedown.prevent
                      >
                        F7
                      </button>
@@ -66,13 +70,16 @@
                   v-model="form.partType"
                   placeholder="Select part type"
                   readonly
-                  @click="openPartTypeModal"
+                  @focus="partTypeFocused = true"
+                  @blur="partTypeFocused = false"
                 >
                   <template #suffix>
                     <button
+                      v-if="partTypeFocused"
                       type="button"
                       class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded mr-1"
                       @click="openPartTypeModal"
+                      @mousedown.prevent
                     >
                       ▼
                     </button>
@@ -409,7 +416,7 @@
   </template>
   
   <script setup>
-import { reactive, ref, computed, onMounted } from "vue";
+import { reactive, ref, computed, onMounted, onUnmounted } from "vue";
 
 definePageMeta({
   title: "Local Content Parts",
@@ -423,6 +430,10 @@ const selectedPartInModal = ref(null);
 // Part Type modal state
 const showPartTypeModal = ref(false);
 const selectedPartType = ref(null);
+
+// Field focus state
+const partNoFocused = ref(false);
+const partTypeFocused = ref(false);
 
 // Vendor pagination state
 const currentVendorPage = ref(1);
@@ -855,7 +866,46 @@ onMounted(() => {
   if (masterParts.value.length > 0) {
     selectPart(masterParts.value[0]);
   }
+  
+  // Add keyboard event listener for F7 key
+  document.addEventListener('keydown', handleKeyDown);
 });
+
+// Clean up event listener on unmount
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown);
+});
+
+// Handle keyboard events
+const handleKeyDown = (event) => {
+  // Check if F7 key is pressed (keyCode 118 or key === 'F7')
+  if (event.key === 'F7' || event.keyCode === 118) {
+    // Check if Part No field is focused
+    if (partNoFocused.value) {
+      event.preventDefault();
+      openPartModal();
+    }
+    // Check if Part Type field is focused
+    else if (partTypeFocused.value) {
+      event.preventDefault();
+      openPartTypeModal();
+    }
+  }
+  
+  // Check if F8 key is pressed (keyCode 119 or key === 'F8')
+  if (event.key === 'F8' || event.keyCode === 119) {
+    // If Part No modal is open and a part is selected, confirm selection
+    if (showPartModal.value && selectedPartInModal.value) {
+      event.preventDefault();
+      confirmPartSelection();
+    }
+    // If Part Type modal is open and a part type is selected, confirm selection
+    else if (showPartTypeModal.value && selectedPartType.value) {
+      event.preventDefault();
+      confirmPartTypeSelection();
+    }
+  }
+};
 
 const handleClose = () => {
   // Close the form (could navigate back or close modal)
