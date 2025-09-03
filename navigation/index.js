@@ -14,74 +14,55 @@ export default [
     description: "Wonderful apps",
     child: [
       {
-        title: "Pages",
+        title: "Masters Module",
         icon: "ic:outline-insert-drive-file",
         child: [
-          // {
-          //   title: "Authentication",
-          //   child: [
-          //     {
-          //       title: "Login V1",
-          //       path: "/auth/login-v1",
-          //     },
-          //     {
-          //       title: "Login V2",
-          //       path: "/auth/login-v2",
-          //     },
-          //     {
-          //       title: "Register V1",
-          //       path: "/auth/register-v1",
-          //     },
-          //     {
-          //       title: "Register V2",
-          //       path: "/auth/register-v2",
-          //     },
-          //     {
-          //       title: "Forgot Password V1",
-          //       path: "/auth/forgot-password-v1",
-          //     },
-          //     {
-          //       title: "Forgot Password V2",
-          //       path: "/auth/forgot-password-v2",
-          //     },
-          //     {
-          //       title: "Reset Password V1",
-          //       path: "/auth/reset-password-v1",
-          //     },
-          //     {
-          //       title: "Reset Password V2",
-          //       path: "/auth/reset-password-v2",
-          //     },
-          //   ],
-          // },
           {
             title: "Local Content Parts",
             path: "/localContentParts",
           },
+          {
+            title: "Models",
+            path: "/models",
+          },
+        ],
+      },
+      {
+        title: "Procurement Module",
+        icon: "ic:outline-shopping-bag",
+        child: [
+          {
+            title: "Assembly",
+            path: "/assembly",
+          },
           // {
-          //   title: "Error 500",
-          //   path: "/error/500",
+          //   title: "Product Detail",
+          //   path: "/apps/ecommerce/product-detail?sku=P-1001",
+          // },
+          // {
+          //   title: "Checkout",
+          //   path: "/apps/ecommerce/checkout",
           // },
         ],
       },
-      // {
-      //   title: "E-commerce",
-      //   icon: "ic:outline-shopping-bag",
-      //   child: [
-      //     {
-      //       title: "Products",
-      //       path: "/apps/ecommerce/products",
-      //     },
-      //     {
-      //       title: "Product Detail",
-      //       path: "/apps/ecommerce/product-detail?sku=P-1001",
-      //     },
-      //     {
-      //       title: "Checkout",
-      //       path: "/apps/ecommerce/checkout",
-      //     },
-      //   ],
-      // },
+      {
+        title: "Sales Module",
+        icon: "ic:outline-shopping-bag",
+        child: [
+          {
+            title: "Quotations",
+            path: "/quotations",
+          },
+          // {
+          //   title: "Product Detail",
+          //   path: "/apps/ecommerce/product-detail?sku=P-1001",
+          // },
+          // {
+          //   title: "Checkout",
+          //   path: "/apps/ecommerce/checkout",
+          // },
+        ],
+      },
     ],
   },
   // {
