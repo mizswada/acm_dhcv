@@ -10,57 +10,275 @@ export default [
     ],
   },
   {
-    header: "Apps & Pages",
-    description: "Wonderful apps",
+    header: "Modules and Sub-Modules",
+    description: "Apps & Pages",
     child: [
       {
-        title: "Masters Module",
+        title: "Masters",
         icon: "ic:outline-insert-drive-file",
         child: [
           {
-            title: "Local Content Parts",
-            path: "/localContentParts",
+            title: "Models",
+            path: "/Masters/models",
           },
           {
-            title: "Models",
-            path: "/models",
+            title: "Drivers",
+            path: "/Masters/drivers",
+          },
+          {
+            title: "Trade Plates",
+            path: "/Masters/trade-plates",
+          },
+          {
+            title: "Local Content Parts",
+            path: "/Masters/localContentParts",
+          },
+          {
+            title: "Model Categories",
+            path: "/Masters/model-categories",
+          },
+          {
+            title: "Model Charges",
+            path: "/Masters/model-charges",
+          },
+          {
+            title: "Model Groups",
+            path: "/Masters/model-groups",
+          },
+          {
+            title: "Colors",
+            path: "/Masters/colors",
           },
         ],
       },
       {
-        title: "Procurement Module",
+        title: "Procurement",
         icon: "ic:outline-shopping-bag",
         child: [
+          {
+            title: "OPC Decisions",
+            path: "/Procurement/OPC-Decisions",
+          },
+          {
+            title: "CKD/CBU Purchase Orders",
+            path: "/Procurement/CKD-PO",
+          },
+          {
+            title: "CKD Receipts",
+            path: "/Procurement/CKD-receipts",
+          },
+          {
+            title: "CBU Receipts - Local",
+            path: "/Procurement/CBU-receipt-local",
+          },
+          {
+            title: "CBU Receipts - Imported",
+            path: "/Procurement/CBU-receipt-import",
+          },
+          {
+            title: "Local Content Receipts",
+            path: "/Procurement/local-content-receipt",
+          },
           {
             title: "Assembly",
-            path: "/assembly",
+            path: "/Procurement/assembly",
           },
-          // {
-          //   title: "Product Detail",
-          //   path: "/apps/ecommerce/product-detail?sku=P-1001",
-          // },
-          // {
-          //   title: "Checkout",
-          //   path: "/apps/ecommerce/checkout",
-          // },
+          {
+            title: "Accessory Fittings",
+            path: "/Procurement/accessory-fittings",
+          },
+          {
+            title: "Assembly Invoice",
+            path: "/Procurement/assembly-invoice",
+          },
+          {
+            title: "Accessory Fitting Invoice",
+            path: "/Procurement/accessory-fitting-invoice",
+          },
         ],
       },
       {
-        title: "Sales Module",
+        title: "Sales",
         icon: "ic:outline-shopping-bag",
         child: [
           {
-            title: "Quotations",
-            path: "/quotations",
+            title: "Tenders",
+            path: "/Sales/tenders",
           },
-          // {
-          //   title: "Product Detail",
-          //   path: "/apps/ecommerce/product-detail?sku=P-1001",
-          // },
-          // {
-          //   title: "Checkout",
-          //   path: "/apps/ecommerce/checkout",
-          // },
+          {
+            title: "Sales Enquiries",
+            path: "/Sales/sales-enquiries",
+          },
+          {
+            title: "Quotations",
+            path: "/Sales/quotations",
+          },
+          {
+            title: "BVO Forms Issue",
+            path: "/Sales/bvo-forms-issue",
+          },
+          {
+            title: "Vehicle Orders",
+            path: "/Sales/vehicle-orders",
+          },
+          {
+            title: "Stock Allocation-VO",
+            path: "/Sales/stock-allo-vo",
+          },
+          {
+            title: "Documentation Clearance Request",
+            path: "/Sales/docu-clearance-req",
+          },
+          {
+            title: "Vehicle Invoices",
+            path: "/Sales/vehicle-invoices",
+          },
+          {
+            title: "Vehicle Invoices Cancellation",
+            path: "/Sales/vehicle-invoices-cancel",
+          },
+          {
+            title: "Vehicle Credit Note",
+            path: "/Sales/vehicle-credit-note",  
+          },
+        ],
+      },
+      {
+        title: "Spares",
+        icon: "ic:outline-shopping-bag",
+        child: [
+          {
+            title: "Spares SOs",
+            path: "/Spares/spares-sos",
+          },
+          {
+            title: "Spares DOs",
+            path: "/Spares/spares-dos",
+          },
+          {
+            title: "Spares Sales Invoices",
+            path: "/Spares/spares-sales-invoices",
+          },
+          {
+            title: "Spares Sales Returns",
+            path: "/Spares/spares-sales-return",
+          },
+          {
+            title: "Spares POs",
+            path: "/Spares/spares-pos",
+          },
+          {
+            title: "GRNs",
+            path: "/Spares/grns",
+          },
+          {
+            title: "Spares Purchase Returns",
+            path: "/Spares/spares-purchase-return",
+          },
+          {
+            title: "Spares Stock Requests",
+            path: "/Spares/spares-stock-req",
+          },
+          {
+            title: "Stock Transfers",
+            path: "/Spares/stock-transfers",
+          },
+          {
+            title: "Stock Adjustments",
+            path: "/Spares/stock-adjustments",
+          },
+        ],
+      },
+      {
+        title: "Service",
+        icon: "ic:outline-shopping-bag",
+        child: [
+          {
+            title: "Job Cards",
+            path: "/Service/job-cards",
+          },
+          {
+            title: "Oil/Lubes Issue",
+            path: "/Service/oil-lube-issue",
+          },
+          {
+            title: "Service Invoice",
+            path: "/Service/service-invoice",
+          },
+          {
+            title: "Clock In/Clock Out",
+            path: "/Service/clock-in-out",
+          },
+          {
+            title: "Repair Followups",
+            path: "/Service/repair-followups",
+          },
+          {
+            title: "Service Bookings",
+            path: "/Service/service-bookings",
+          },
+          {
+            title: "Oil/Lubes Purchase Order",
+            path: "/Service/oil-lube-po",
+          },
+          {
+            title: "Oil/Lubes Receipts",
+            path: "/Service/oil-lube-receipts",
+          },
+          {
+            title: "Oil/Lubes Purchase Returns",
+            path: "/Service/oil-lube-pr",
+          },
+          {
+            title: "Oil/Lubes Returns",
+            path: "/Service/oil-lube-returns",
+          },
+        ],
+      },
+      {
+        title: "Accounting",
+        icon: "ic:outline-shopping-bag",
+        child: [
+          {
+            title: "Bank Payment Vouchers",
+            path: "/Accounting/bank-payment-voucher",
+          },
+          {
+            title: "Bank Receipt Vouchers",
+            path: "/Accounting/bank-receipt-voucher",
+          },
+          {
+            title: "Cash Payment Vouchers",
+            path: "/Accounting/cash-payment-voucher",
+          },
+          {
+            title: "Cash Receipt Vouchers",
+            path: "/Accounting/cash-receipt-voucher",
+          },
+          {
+            title: "Journal Vouchers",
+            path: "/Accounting/journal-voucher",
+          },
+          {
+            title: "Asset Transfers",
+            path: "/Accounting/assets-transfer",
+          },
+          {
+            title: "Miscellaneous POs",
+            path: "/Accounting/miscellaneous-pos",
+          },
+          {
+            title: "Bank Payment Advice - FIN",
+            path: "/Accounting/bank-payment-advice",
+          },
+          {
+            title: "Cash Clearing",
+            path: "/Accounting/cash-clearing",
+          },
+          {
+            title: "Invoice Carry Forward",
+            path: "/Accounting/invoice-carry-forward",
+          },
         ],
       },
     ],
