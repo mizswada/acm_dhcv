@@ -317,6 +317,12 @@
             >
               Refresh
             </rs-button>
+            <rs-button
+              variant="success"
+              @click="handleSave"
+            >
+              Save
+            </rs-button>
         </div>
       </div>
         </template>
@@ -919,6 +925,14 @@ const handleRefresh = () => {
   if (masterParts.value.length > 0) {
     selectPart(masterParts.value[0]);
   }
+};
+
+const handleSave = () => {
+  // Save form data (could be API call)
+  console.log("Saving form data...");
+  // Here you would typically send the form data to your backend
+  // For now, just log the current form state
+  console.log("Form data to save:", form);
 };
 
 // Vendor pagination functions
