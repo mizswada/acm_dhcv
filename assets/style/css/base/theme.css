@@ -1,5 +1,5 @@
 html[data-theme="default"] {
-  --color-primary: 13, 27, 42;
+  --color-primary: 227, 6, 19;
   --color-secondary: 97, 176, 183;
   --color-accent: 243, 244, 246;
   --color-success: 79, 192, 103;
@@ -32,7 +32,7 @@ html[data-theme="default"] {
 }
 
 html[data-theme="dark"] {
-  --color-primary: 97, 176, 183;
+  --color-primary: 227, 6, 19;
   --color-secondary: 13, 27, 42;
   --color-accent: 15, 23, 42;
   --color-success: 79, 192, 103;
@@ -64,7 +64,7 @@ html[data-theme="dark"] {
 }
 
 html[data-theme="nier"] {
-  --color-primary: 99, 95, 84;
+  --color-primary: 227, 6, 19;
   --color-secondary: 207, 107, 83;
   --color-accent: 243, 88, 106;
   --color-success: 79, 192, 103;
@@ -96,7 +96,7 @@ html[data-theme="nier"] {
 }
 
 html[data-theme="custom1"] {
-  --color-primary: 9, 76, 90;
+  --color-primary: 227, 6, 19;
   --color-secondary: 62, 72, 83;
   --color-accent: 0, 103, 236;
   --color-success: 11, 152, 76;

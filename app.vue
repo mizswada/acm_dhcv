@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-  title: "corradUI - NuxtJS Admin Dashboard Template",
+  title: "Vehicle Management System (VMS)",
   description: "Home page",
   htmlAttrs: {
     lang: "en",

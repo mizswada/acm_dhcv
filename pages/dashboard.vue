@@ -5,49 +5,100 @@ definePageMeta({
   // requiresAuth: true,  // This is use for Login Auth for page
 });
 
+// VMS Dashboard Data Statistics
 const data1 = ref([]);
 const data2 = ref([]);
 const data3 = ref([]);
 const data4 = ref([]);
 const changeKey = ref(0);
-var sparkline1Data = [47, 45, 54, 38, 56, 24, 65];
-var sparkline2Data = [61, 35, 66, 41, 59, 25, 32];
-var sparkline3Data = [25, 18, 36, 41, 43, 35, 14];
-var sparkline4Data = [8, 16, 22, 41, 43, 35, 14];
-const customers = [
+
+// Vehicle Revenue Trend (Last 7 days)
+var vehicleRevenueData = [125000, 142000, 138000, 165000, 158000, 172000, 189000];
+
+// Fleet Utilization Trend (Last 7 days)
+var fleetUtilizationData = [78, 82, 85, 79, 88, 91, 87];
+
+// Service Orders Trend (Last 7 days)
+var serviceOrdersData = [12, 15, 18, 14, 22, 19, 16];
+
+// Vehicle Sales Trend (Last 7 days)
+var vehicleSalesData = [8, 12, 10, 15, 18, 14, 16];
+
+// Recent Vehicle Activities
+const recentActivities = [
   {
-    name: "Ali",
-    age: "25",
-    city: "Kuala Lumpur",
-    country: "Malaysia",
-    totalPurchase: 1524,
-    purchase: 23,
+    id: "VIN001",
+    model: "Toyota Camry 2.5V",
+    status: "Service Completed",
+    location: "Kuala Lumpur",
+    time: "2 hours ago",
+    amount: 1250,
+    priority: "high"
   },
   {
-    name: "Kamal",
-    age: "45",
-    city: "Pulau Pinang",
-    country: "Malaysia",
-    totalPurchase: 643,
-    purchase: 14,
+    id: "VIN002", 
+    model: "Honda Civic 1.8E",
+    status: "New Sale",
+    location: "Petaling Jaya",
+    time: "4 hours ago",
+    amount: 95000,
+    priority: "medium"
   },
   {
-    name: "Auni",
-    age: "21",
-    city: "Kelantan",
-    country: "Malaysia",
-    totalPurchase: 543,
-    purchase: 12,
+    id: "VIN003",
+    model: "Mazda CX-5 2.0L",
+    status: "Maintenance Due",
+    location: "Shah Alam",
+    time: "1 day ago",
+    amount: 0,
+    priority: "high"
   },
   {
-    name: "Iqmal",
-    age: "19",
-    city: "Negeri Sembilan",
-    country: "Malaysia",
-    totalPurchase: 258,
-    purchase: 6,
+    id: "VIN004",
+    model: "Nissan Almera 1.0L",
+    status: "Assembly Complete",
+    location: "Port Klang",
+    time: "2 days ago",
+    amount: 0,
+    priority: "low"
   },
 ];
+
+// Vehicle Fleet Statistics
+const fleetStats = {
+  totalVehicles: 156,
+  available: 89,
+  inService: 34,
+  maintenance: 18,
+  sold: 15,
+  utilizationRate: 87.2
+};
+
+// Sales Pipeline Statistics
+const salesPipeline = {
+  enquiries: 23,
+  quotations: 18,
+  orders: 8,
+  invoices: 5,
+  totalValue: 2450000
+};
+
+// Service Statistics
+const serviceStats = {
+  activeJobCards: 12,
+  completedToday: 8,
+  pending: 4,
+  averageCompletionTime: "2.5 hours"
+};
+
+// Financial Overview
+const financialOverview = {
+  monthlyRevenue: 2450000,
+  vehicleSales: 1800000,
+  serviceRevenue: 650000,
+  outstandingInvoices: 450000,
+  pendingPayments: 320000
+};
 
 const randomizeArray = function (arg) {
   var array = arg.slice();
@@ -68,23 +119,23 @@ const randomizeArray = function (arg) {
 };
 
 data1.value.push({
-  name: "Revenues",
-  data: randomizeArray(sparkline1Data),
+  name: "Vehicle Revenue",
+  data: randomizeArray(vehicleRevenueData),
 });
 
 data2.value.push({
-  name: "Users",
-  data: randomizeArray(sparkline2Data),
+  name: "Fleet Utilization",
+  data: randomizeArray(fleetUtilizationData),
 });
 
 data3.value.push({
-  name: "Products",
-  data: randomizeArray(sparkline3Data),
+  name: "Service Orders",
+  data: randomizeArray(serviceOrdersData),
 });
 
 data4.value.push({
-  name: "Viewers",
-  data: randomizeArray(sparkline4Data),
+  name: "Vehicle Sales",
+  data: randomizeArray(vehicleSalesData),
 });
 
 const chartOptions = computed(() => ({
@@ -106,9 +157,9 @@ const chartOptions = computed(() => ({
   },
 }));
 
-// Radial Chart
+// Fleet Utilization Radial Chart
 
-const radialData = ref([44, 55, 67, 83]);
+const radialData = ref([fleetStats.utilizationRate, 75, 60, 45]);
 
 const chartOptionsRadial = computed(() => ({
   chart: {
@@ -131,30 +182,30 @@ const chartOptionsRadial = computed(() => ({
         },
         total: {
           show: true,
-          label: "Total",
+          label: "Fleet Utilization",
           formatter: function (w) {
-            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-            return 249;
+            return fleetStats.utilizationRate + "%";
           },
         },
       },
     },
   },
-  labels: ["Product A", "Product B", "Product C", "Product D"],
+  labels: ["Current Month", "Last Month", "Target", "Average"],
   stroke: {
     lineCap: "round",
   },
+  colors: ["#10B981", "#3B82F6", "#F59E0B", "#EF4444"],
 }));
 
-// Transaction Graph
+// Vehicle Revenue & Sales Graph
 const transactionData = ref([
   {
-    name: "Bill A",
-    data: [...Array(12).keys()].map((n) => Math.round(Math.random() * 100)),
+    name: "Vehicle Sales Revenue",
+    data: [1800000, 1950000, 1720000, 2100000, 1980000, 2250000, 1890000, 2050000, 2180000, 1920000, 2070000, 2300000],
   },
   {
-    name: "Bill B",
-    data: [...Array(12).keys()].map((n) => Math.round(Math.random() * 100)),
+    name: "Service Revenue",
+    data: [450000, 520000, 480000, 610000, 580000, 650000, 590000, 620000, 680000, 550000, 630000, 700000],
   },
 ]);
 
@@ -233,9 +284,9 @@ onMounted(() => {
 <template>
   <div class="p-4">
     <LayoutsBreadcrumb />
-    <!-- First Row -->
+    <!-- First Row - VMS Statistics Cards -->
     <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-x-6">
-      <!-- Summary Card #1 -->
+      <!-- Vehicle Revenue Card -->
       <rs-card>
         <div class="summary-1 pt-5 pb-3 px-5 flex items-center gap-4">
           <div
@@ -245,10 +296,10 @@ onMounted(() => {
           </div>
           <div class="flex-1 truncate">
             <span class="block font-semibold text-xl leading-tight">
-              RM 100,000</span
+              RM {{ (financialOverview.monthlyRevenue / 1000000).toFixed(1) }}M</span
             >
             <span class="text-base font-semibold text-gray-500"
-              >Total Revenues</span
+              >Monthly Revenue</span
             >
           </div>
         </div>
@@ -262,14 +313,15 @@ onMounted(() => {
               colors: ['#F43F5E'],
               yaxis: {
                 min: 0,
-                max: Math.max(...data1[0].data) + 10,
+                max: Math.max(...data1[0].data) + 10000,
               },
             }"
             :series="data1"
           ></VueApexCharts>
         </ClientOnly>
       </rs-card>
-      <!-- Summary Card #2 -->
+      
+      <!-- Fleet Utilization Card -->
       <rs-card>
         <div class="summary-2 pt-5 pb-3 px-5 flex items-center gap-4">
           <div
@@ -277,13 +329,13 @@ onMounted(() => {
           >
             <Icon
               class="text-indigo-500"
-              name="ic:outline-account-circle"
+              name="ic:outline-directions-car"
             ></Icon>
           </div>
           <div class="flex-1 truncate">
-            <span class="block font-semibold text-xl leading-tight"> 512</span>
+            <span class="block font-semibold text-xl leading-tight">{{ fleetStats.utilizationRate }}%</span>
             <span class="text-base font-semibold text-gray-500"
-              >Total Users</span
+              >Fleet Utilization</span
             >
           </div>
         </div>
@@ -297,25 +349,26 @@ onMounted(() => {
               colors: ['#6366F1'],
               yaxis: {
                 min: 0,
-                max: Math.max(...data2[0].data) + 10,
+                max: 100,
               },
             }"
             :series="data2"
           ></VueApexCharts>
         </ClientOnly>
       </rs-card>
-      <!-- Summary Card #3 -->
+      
+      <!-- Service Orders Card -->
       <rs-card>
         <div class="summary-3 pt-5 pb-3 px-5 flex items-center gap-4">
           <div
             class="p-5 flex justify-center items-center bg-orange-100 rounded-2xl"
           >
-            <Icon class="text-orange-500" name="ic:outline-shopping-bag"></Icon>
+            <Icon class="text-orange-500" name="ic:outline-build"></Icon>
           </div>
           <div class="flex-1 truncate">
-            <span class="block font-semibold text-xl leading-tight"> 20</span>
+            <span class="block font-semibold text-xl leading-tight">{{ serviceStats.activeJobCards }}</span>
             <span class="text-base font-semibold text-gray-500"
-              >Total Products</span
+              >Active Service Orders</span
             >
           </div>
         </div>
@@ -329,27 +382,28 @@ onMounted(() => {
               colors: ['#F97316'],
               yaxis: {
                 min: 0,
-                max: Math.max(...data3[0].data) + 10,
+                max: Math.max(...data3[0].data) + 5,
               },
             }"
             :series="data3"
           ></VueApexCharts>
         </ClientOnly>
       </rs-card>
-      <!-- Summary Card #4 -->
+      
+      <!-- Vehicle Sales Card -->
       <rs-card>
         <div class="summary-4 pt-5 pb-3 px-5 flex items-center gap-4">
           <div
             class="p-5 flex justify-center items-center bg-blue-100 rounded-2xl"
           >
-            <Icon class="text-blue-500" name="ic:outline-remove-red-eye"></Icon>
+            <Icon class="text-blue-500" name="ic:outline-local-shipping"></Icon>
           </div>
           <div class="flex-1 truncate">
             <span class="block font-semibold text-xl leading-tight">
-              2,452</span
+              {{ fleetStats.totalVehicles }}</span
             >
             <span class="text-base font-semibold text-gray-500"
-              >Total Viewers</span
+              >Total Vehicles</span
             >
           </div>
         </div>
@@ -363,7 +417,7 @@ onMounted(() => {
               colors: ['#3B82F6'],
               yaxis: {
                 min: 0,
-                max: Math.max(...data4[0].data) + 10,
+                max: Math.max(...data4[0].data) + 5,
               },
             }"
             :series="data4"
@@ -374,9 +428,9 @@ onMounted(() => {
 
     <div class="flex flex-col md:flex-row gap-x-6">
       <div class="w-12/2 md:w-8/12 flex flex-col">
-        <!-- Graph -->
+        <!-- Vehicle Revenue Chart -->
         <rs-card class="flex-1">
-          <template #header> Transaction </template>
+          <template #header> Vehicle Revenue & Sales Trend </template>
           <template #body>
             <ClientOnly>
               <VueApexCharts
@@ -390,29 +444,50 @@ onMounted(() => {
             ></ClientOnly>
           </template>
         </rs-card>
+        
+        <!-- Recent Vehicle Activities -->
         <rs-card class="flex-1">
-          <template #header> Referral</template>
+          <template #header> Recent Vehicle Activities </template>
           <template #body>
             <div
-              v-for="(val, index) in customers"
+              v-for="(activity, index) in recentActivities"
               :key="index"
               class="flex justify-between items-center rounded-lg bg-[rgb(var(--bg-1))] p-5 first:mt-0 mt-3"
             >
               <div class="flex items-center gap-x-4">
-                <img
-                  src="@/assets/img/avatar/user.webp"
-                  class="h-10 w-10 rounded-lg"
-                />
+                <div 
+                  class="h-10 w-10 rounded-lg flex items-center justify-center"
+                  :class="{
+                    'bg-green-100': activity.priority === 'low',
+                    'bg-yellow-100': activity.priority === 'medium', 
+                    'bg-red-100': activity.priority === 'high'
+                  }"
+                >
+                  <Icon 
+                    :name="activity.status.includes('Sale') ? 'ic:outline-local-shipping' : 
+                           activity.status.includes('Service') ? 'ic:outline-build' : 
+                           activity.status.includes('Maintenance') ? 'ic:outline-warning' : 
+                           'ic:outline-check-circle'"
+                    :class="{
+                      'text-green-600': activity.priority === 'low',
+                      'text-yellow-600': activity.priority === 'medium',
+                      'text-red-600': activity.priority === 'high'
+                    }"
+                    size="20px"
+                  />
+                </div>
                 <div class="flex-1">
                   <div class="flex flex-col">
                     <span
                       class="text-gray-900 dark:text-white font-semibold text-lg"
                     >
-                      {{ val.name }}
+                      {{ activity.id }} - {{ activity.model }}
                     </span>
                     <span class="text-gray-600 dark:text-gray-50 text-sm">
-                      RM{{ parseFloat(val.totalPurchase).toFixed(2) }} |
-                      {{ val.purchase }} sold
+                      {{ activity.status }} | {{ activity.location }} | {{ activity.time }}
+                      <span v-if="activity.amount > 0" class="ml-2 font-semibold text-green-600">
+                        RM{{ activity.amount.toLocaleString() }}
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -421,7 +496,7 @@ onMounted(() => {
                 <button
                   class="flex items-center p-4 rounded-full bg-[rgb(var(--bg-2))] hover:bg-[rgb(var(--bg-2))]/10 shadow-md"
                 >
-                  <Icon size="20px" name="ic:baseline-mail-outline"></Icon>
+                  <Icon size="20px" name="ic:baseline-visibility"></Icon>
                 </button>
               </div>
             </div>
@@ -429,9 +504,9 @@ onMounted(() => {
         </rs-card>
       </div>
       <div class="w-12/2 md:w-4/12 flex flex-col">
-        <!-- Monthly Target Radial -->
+        <!-- Fleet Status Overview -->
         <rs-card class="flex-1">
-          <template #header> Monthly Target </template>
+          <template #header> Fleet Status Overview </template>
           <template #body>
             <ClientOnly>
               <VueApexCharts
@@ -444,29 +519,65 @@ onMounted(() => {
               ></VueApexCharts>
             </ClientOnly>
             <hr class="my-4" />
-            <p class="text-xl py-5 font-medium">Products</p>
-            <div
-              class="flex item-center gap-x-4"
-              :class="{
-                'mt-0': index === 0,
-                'mt-3': index !== 0,
-              }"
-              v-for="(val, index) in ['A', 'B', 'C', 'D', 'E']"
-              :key="index"
-            >
-              <img
-                src="@/assets/img/avatar/user.webp"
-                class="h-20 w-20 object-cover rounded-lg"
-              />
-              <div class="flex-1 flex items-center">
-                <div>
-                  <span class="font-semibold text-lg leading-tight"
-                    >Product {{ val }}</span
-                  >
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
+            <p class="text-xl py-5 font-medium">Fleet Breakdown</p>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <span class="font-medium">Available</span>
                 </div>
+                <span class="font-bold text-lg">{{ fleetStats.available }}</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <span class="font-medium">In Service</span>
+                </div>
+                <span class="font-bold text-lg">{{ fleetStats.inService }}</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <span class="font-medium">Maintenance</span>
+                </div>
+                <span class="font-bold text-lg">{{ fleetStats.maintenance }}</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span class="font-medium">Sold</span>
+                </div>
+                <span class="font-bold text-lg">{{ fleetStats.sold }}</span>
+              </div>
+            </div>
+          </template>
+        </rs-card>
+        
+        <!-- Sales Pipeline -->
+        <rs-card class="flex-1 mt-6">
+          <template #header> Sales Pipeline </template>
+          <template #body>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Enquiries</span>
+                <span class="font-bold text-lg">{{ salesPipeline.enquiries }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Quotations</span>
+                <span class="font-bold text-lg">{{ salesPipeline.quotations }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Orders</span>
+                <span class="font-bold text-lg">{{ salesPipeline.orders }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Invoices</span>
+                <span class="font-bold text-lg">{{ salesPipeline.invoices }}</span>
+              </div>
+              <hr class="my-4" />
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600 font-medium">Total Value</span>
+                <span class="font-bold text-xl text-green-600">RM {{ (salesPipeline.totalValue / 1000000).toFixed(1) }}M</span>
               </div>
             </div>
           </template>
