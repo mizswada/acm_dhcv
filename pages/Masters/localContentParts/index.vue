@@ -3,9 +3,17 @@
       <LayoutsBreadcrumb />
       <rs-card>
         <template #header>
-          <div class="flex">
-            <Icon class="mr-2 flex justify-center" name="ic:outline-inventory"></Icon>
-            Local Content Parts
+          <div class="flex items-center justify-between">
+            <div class="flex">
+              <Icon class="mr-2 flex justify-center" name="ic:outline-inventory"></Icon>
+              Local Content Parts
+            </div>
+            <div class="flex items-center space-x-4">
+              <span class="text-sm font-medium" :class="isEditMode ? 'text-green-600' : 'text-gray-500'">
+                {{ isEditMode ? 'EDIT MODE' : 'VIEW MODE' }}
+              </span>
+              <span class="text-xs text-gray-400">(F7: Toggle Edit | F8: Save & Exit)</span>
+            </div>
           </div>
         </template>
         <template #body>
@@ -19,7 +27,7 @@
                    label="Part No"
                    v-model="form.partNo"
                    placeholder="Enter part number"
-                   readonly
+                   :readonly="!isEditMode"
                    @focus="partNoFocused = true"
                    @blur="partNoFocused = false"
                  >
@@ -31,7 +39,7 @@
                        @click="openPartModal"
                        @mousedown.prevent
                      >
-                       F7
+                       F9
                      </button>
                    </template>
                  </FormKit>
@@ -42,7 +50,7 @@
                   label="Part Name"
                   v-model="form.partName"
                   placeholder="Enter part name"
-                  readonly
+                  :readonly="!isEditMode"
                 />
               </div>
               <div>
@@ -51,7 +59,7 @@
                   label="Vendor Part Code"
                   v-model="form.vendorPartCode"
                   placeholder="Enter vendor part code"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
           <div>
@@ -60,7 +68,7 @@
                   label="Tag"
                   v-model="form.tag"
                   placeholder="Enter tag"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
           <div>
@@ -69,7 +77,7 @@
                   label="Part Type"
                   v-model="form.partType"
                   placeholder="Select part type"
-                  readonly
+                  :readonly="!isEditMode"
                   @focus="partTypeFocused = true"
                   @blur="partTypeFocused = false"
                 >
@@ -94,7 +102,7 @@
                   label="Category Code"
                   v-model="form.categoryCode"
                   placeholder="Enter category code"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
               <div class="col-span-2">
@@ -103,7 +111,7 @@
                   label="Category Name"
                   v-model="form.categoryName"
                   placeholder="Enter category name"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
           <div>
@@ -112,7 +120,7 @@
                   label="Group Code"
                   v-model="form.groupCode"
                   placeholder="Enter group code"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
               <div class="col-span-2">
@@ -121,7 +129,7 @@
                   label="Group Name"
                   v-model="form.groupName"
                   placeholder="Enter group name"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
         </div>
@@ -136,7 +144,7 @@
                   v-model="form.dutyPercent"
                   placeholder="0"
                   step="0.01"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
           <div>
@@ -146,15 +154,18 @@
                   v-model="form.yenPrice"
                   placeholder="0"
                   step="0.01"
-                  readonly
+                  :readonly="!isEditMode"
                 />
               </div>
               <div class="flex items-center space-x-2 pt-6">
                 <div class="flex items-center">
                   <span class="text-sm font-medium mr-2">Taxable:</span>
-                  <div class="w-4 h-4 border border-gray-400 rounded-sm flex items-center justify-center bg-white">
-                    <span v-if="form.taxable" class="text-gray-800 text-xs font-bold">✓</span>
-                  </div>
+                  <input 
+                    v-model="form.taxable" 
+                    type="checkbox" 
+                    :disabled="!isEditMode"
+                    class="w-4 h-4 text-primary border-gray-400 rounded focus:ring-primary"
+                  />
                 </div>
           </div>
           <div>
@@ -164,7 +175,7 @@
                   v-model="form.rmCostPrice"
                   placeholder="0"
                   step="0.01"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
           <div>
@@ -172,7 +183,7 @@
                   type="date"
                   label="Date of Creation"
                   v-model="form.dateCreated"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
   
@@ -184,7 +195,7 @@
                   v-model="form.rmSalePrice"
                   placeholder="0"
                   step="0.01"
-                  readonly
+                  :readonly="!isEditMode"
                 />
               </div>
               <div class="col-span-2">
@@ -193,7 +204,7 @@
                   label="Specifications"
                   v-model="form.specifications"
                   placeholder="Enter specifications"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
               <div class="col-span-2">
@@ -202,7 +213,7 @@
                   label="Superceded By"
                   v-model="form.supercededBy"
                   placeholder="Enter superceded by"
-                  readonly
+                  :readonly="!isEditMode"
                 />
           </div>
         </div>
@@ -252,7 +263,7 @@
                         v-model="vendor.code"
                         placeholder="Enter vendor code"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        readonly
+                        :readonly="!isEditMode"
                       />
                     </td>
                     <td class="px-4 py-3 border-b">
@@ -261,7 +272,7 @@
                         v-model="vendor.name"
                         placeholder="Enter vendor name"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        readonly
+                        :readonly="!isEditMode"
                       />
                 </td>
                     <td class="px-4 py-3 border-b">
@@ -271,21 +282,24 @@
                         placeholder="0"
                         step="0.01"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        readonly
+                        :readonly="!isEditMode"
                       />
                 </td>
                     <td class="px-4 py-3 text-center border-b">
-                      <div class="w-4 h-4 border border-gray-400 rounded-sm flex items-center justify-center mx-auto bg-white">
-                        <span v-if="vendor.preferred" class="text-gray-800 text-xs font-bold">✓</span>
-                      </div>
-                </td>
+                      <input 
+                        v-model="vendor.preferred" 
+                        type="checkbox" 
+                        :disabled="!isEditMode"
+                        class="w-4 h-4 text-primary border-gray-400 rounded focus:ring-primary"
+                      />
+                    </td>
                     <td class="px-4 py-3 border-b">
                       <FormKit
                         type="text"
                         v-model="vendor.modelCode"
                         placeholder="Enter model code"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        readonly
+                        :readonly="!isEditMode"
                       />
                 </td>
                     <td class="px-4 py-3 border-b">
@@ -294,7 +308,7 @@
                         v-model="vendor.qty"
                         placeholder="0"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        readonly
+                        :readonly="!isEditMode"
                       />
                 </td>
               </tr>
@@ -357,7 +371,7 @@
                       'bg-blue-800 text-white': selectedPartInModal?.partNo === part.partNo,
                       'hover:bg-gray-50': selectedPartInModal?.partNo !== part.partNo
                     }"
-                    @click="selectedPartInModal = part"
+                    @click="selectPartAndCloseModal(part)"
                   >
                     <td class="px-4 py-3 border-b">{{ part.partNo }}</td>
                     <td class="px-4 py-3 border-b">{{ part.partName }}</td>
@@ -371,13 +385,6 @@
             <rs-button variant="secondary-outline" @click="closePartModal">
               Cancel
             </rs-button>
-            <button
-              v-if="selectedPartInModal"
-              @click="confirmPartSelection"
-              class="px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white rounded"
-            >
-              F8
-            </button>
           </div>
         </template>
       </rs-modal>
@@ -395,7 +402,7 @@
                   'bg-blue-800 text-white': selectedPartType?.value === partType.value,
                   'hover:bg-gray-50': selectedPartType?.value !== partType.value
                 }"
-                @click="selectedPartType = partType"
+                @click="selectPartTypeAndCloseModal(partType)"
               >
                 <div class="font-medium">{{ partType.label }}</div>
                 <div class="text-sm opacity-75">{{ partType.description }}</div>
@@ -408,13 +415,6 @@
             <rs-button variant="secondary-outline" @click="closePartTypeModal">
               Cancel
             </rs-button>
-            <button
-              v-if="selectedPartType"
-              @click="confirmPartTypeSelection"
-              class="px-4 py-2 text-sm bg-green-500 hover:bg-green-600 text-white rounded"
-            >
-              F8
-            </button>
           </div>
         </template>
       </rs-modal>
@@ -440,6 +440,7 @@ const selectedPartType = ref(null);
 // Field focus state
 const partNoFocused = ref(false);
 const partTypeFocused = ref(false);
+const isEditMode = ref(false);
 
 // Vendor pagination state
 const currentVendorPage = ref(1);
@@ -820,6 +821,17 @@ const confirmPartSelection = () => {
   }
 };
 
+// Direct selection and close modal functions
+const selectPartAndCloseModal = (part) => {
+  selectPart(part);
+  closePartModal();
+};
+
+const selectPartTypeAndCloseModal = (partType) => {
+  form.partType = partType.value;
+  closePartTypeModal();
+};
+
 // Part Type modal functions
 const openPartTypeModal = () => {
   showPartTypeModal.value = true;
@@ -873,7 +885,7 @@ onMounted(() => {
     selectPart(masterParts.value[0]);
   }
   
-  // Add keyboard event listener for F7 key
+  // Add keyboard event listener for F9 key
   document.addEventListener('keydown', handleKeyDown);
 });
 
@@ -882,10 +894,46 @@ onUnmounted(() => {
   document.removeEventListener('keydown', handleKeyDown);
 });
 
+// Toggle edit mode function
+const toggleEditMode = () => {
+  isEditMode.value = !isEditMode.value;
+  console.log('Edit mode toggled:', isEditMode.value ? 'ON' : 'OFF');
+};
+
+// Save changes and exit edit mode function
+const saveChangesAndExitEditMode = () => {
+  if (isEditMode.value) {
+    // Here you would typically save the data to your backend
+    console.log('Saving changes:', form);
+    
+    // Show success message
+    if (typeof window !== 'undefined' && window.Swal) {
+      window.Swal.fire({
+        title: 'Success!',
+        text: 'Changes saved successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+    } else {
+      alert('Changes saved successfully!');
+    }
+    
+    // Exit edit mode
+    isEditMode.value = false;
+    console.log('Edit mode turned OFF - Changes saved');
+  }
+};
+
 // Handle keyboard events
 const handleKeyDown = (event) => {
   // Check if F7 key is pressed (keyCode 118 or key === 'F7')
   if (event.key === 'F7' || event.keyCode === 118) {
+    event.preventDefault();
+    toggleEditMode();
+  }
+  
+  // Check if F9 key is pressed (keyCode 120 or key === 'F9')
+  if (event.key === 'F9' || event.keyCode === 120) {
     // Check if Part No field is focused
     if (partNoFocused.value) {
       event.preventDefault();
@@ -900,16 +948,9 @@ const handleKeyDown = (event) => {
   
   // Check if F8 key is pressed (keyCode 119 or key === 'F8')
   if (event.key === 'F8' || event.keyCode === 119) {
-    // If Part No modal is open and a part is selected, confirm selection
-    if (showPartModal.value && selectedPartInModal.value) {
-      event.preventDefault();
-      confirmPartSelection();
-    }
-    // If Part Type modal is open and a part type is selected, confirm selection
-    else if (showPartTypeModal.value && selectedPartType.value) {
-      event.preventDefault();
-      confirmPartTypeSelection();
-    }
+    event.preventDefault();
+    // Save changes and exit edit mode
+    saveChangesAndExitEditMode();
   }
 };
 
