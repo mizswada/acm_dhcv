@@ -1,6 +1,5 @@
 <template> 
     <div>
-    <LayoutsBreadcrumb />
     <rs-card>
       <template #header>
         <div class="flex">
@@ -277,7 +276,7 @@
             <!-- Bottom Section - Action Buttons (3 rows) -->
             <div class="space-y-4 pt-6 border-t">
               <!-- Row 1 -->
-              <div class="flex flex-wrap gap-2">
+              <div class="flex flex-wrap gap-2 justify-center">
                 <rs-button variant="secondary-outline" @click="handleCancel">Cancel</rs-button>
                 <rs-button variant="info" @click="handleRefresh">Refresh</rs-button>
                 <rs-button variant="success" btn-type="submit">Save</rs-button>
@@ -289,7 +288,7 @@
               </div>
 
               <!-- Row 2 -->
-              <div class="flex flex-wrap gap-2">
+              <div class="flex flex-wrap gap-2 justify-center">
                 <rs-button variant="info" @click="handleAdvances">Advances</rs-button>
                 <rs-button variant="info" @click="handleVehcInv">Vehc Inv..</rs-button>
                 <rs-button variant="info" @click="handleHPInv">HP Inv..</rs-button>
@@ -301,7 +300,7 @@
               </div>
 
               <!-- Row 3 -->
-              <div class="flex flex-wrap gap-2">
+              <div class="flex flex-wrap gap-2 justify-center">
                 <rs-button variant="info" @click="handleBPVAlloc">BPV Alloc</rs-button>
                 <rs-button variant="info" @click="handleVehGI">Veh GI</rs-button>
                 <rs-button variant="info" @click="handleBVORea" disabled>BVO Rea..</rs-button>

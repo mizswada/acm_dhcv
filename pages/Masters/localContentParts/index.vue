@@ -1,18 +1,11 @@
 <template>
-    <div>
-      <LayoutsBreadcrumb />
-      <rs-card>
+  <div>
+    <rs-card>
         <template #header>
           <div class="flex items-center justify-between">
             <div class="flex">
               <Icon class="mr-2 flex justify-center" name="ic:outline-inventory"></Icon>
               Local Content Parts
-            </div>
-            <div class="flex items-center space-x-4">
-              <span class="text-sm font-medium" :class="isEditMode ? 'text-green-600' : 'text-gray-500'">
-                {{ isEditMode ? 'EDIT MODE' : 'VIEW MODE' }}
-              </span>
-              <span class="text-xs text-gray-400">(F7: Query | F8: Execute Query)</span>
             </div>
           </div>
         </template>
@@ -20,13 +13,6 @@
           <div class="space-y-6">
         <!-- Query and Execute Query Buttons at Top -->
         <div class="flex justify-start space-x-4 mb-6">
-          <!-- <rs-button
-            variant="primary"
-            @click="handleNew"
-            v-if="!isQueryMode"
-          >
-            New
-          </rs-button> -->
           <rs-button
             variant="primary"
             @click="handleQuery"
@@ -39,30 +25,6 @@
           >
             Execute Query (F8)
           </rs-button>
-          
-          <!-- Vendor management buttons (only show in query mode) -->
-          <div v-if="isQueryMode" class="flex items-center space-x-2 ml-4 pl-4 border-l border-gray-300">
-            <span class="text-xs text-gray-500 mr-2">Query Mode Active</span>
-            <button
-              @click="addVendorLine"
-              class="px-3 py-1 text-sm bg-green-500 hover:bg-green-600 text-white rounded"
-            >
-              + Add Vendor
-            </button>
-            <button
-              @click="removeSelectedVendor"
-              :disabled="!selectedVendorIndex"
-              class="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              - Remove Selected
-            </button>
-            <button
-              @click="removeVendorLine"
-              class="px-3 py-1 text-sm bg-orange-500 hover:bg-orange-600 text-white rounded"
-            >
-              - Remove Last
-            </button>
-          </div>
         </div>
 
 
@@ -71,16 +33,13 @@
           <div class="flex items-center space-x-2">
             <div class="w-2 h-2 bg-green-500 rounded-full"></div>
             <span class="text-sm font-medium text-green-800">
-              Query Prepared
+              Query Mode Active
             </span>
             <span v-if="queryFilter" class="text-xs text-green-600">
               - Filter: {{ queryFilter }}
             </span>
-            <span v-else class="text-xs text-green-600">
-              - All Parts
-            </span>
             <span class="text-xs text-blue-600 font-medium ml-2">
-              Press F8 to execute query and enter edit mode
+              Press F8 to execute query
             </span>
           </div>
         </div>
@@ -90,35 +49,26 @@
           <div class="flex justify-between items-center">
             <div class="flex items-center space-x-4">
               <span class="text-sm font-medium text-blue-800">
-                Query Mode - Record {{ currentPartIndex + 1 }} of {{ queryResults.length }}
+                Record {{ currentPartIndex + 1 }} of {{ queryResults.length }}
               </span>
               <span v-if="queryFilter" class="text-xs text-blue-600">
                 Filtered by: {{ queryFilter }}
               </span>
-              <span class="text-xs text-orange-600 font-medium">
-                ✏️ Edit Mode: You can edit vendor data only
-              </span>
             </div>
             <div class="flex items-center space-x-2">
               <button
-                v-if="currentPartIndex > 0"
+                v-if="(isQueryMode && currentPartIndex > 0) || (!isQueryMode && form.partNo && form.partName)"
                 @click="prevPart"
                 class="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"
               >
                 &#8249; Previous
               </button>
               <button
-                v-if="currentPartIndex < queryResults.length - 1"
+                v-if="(isQueryMode && currentPartIndex < queryResults.length - 1) || (!isQueryMode && form.partNo && form.partName)"
                 @click="nextPart"
                 class="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"
               >
                 Next &#8250;
-              </button>
-              <button
-                @click="exitQueryMode"
-                class="px-3 py-1 text-sm bg-gray-500 hover:bg-gray-600 text-white rounded"
-              >
-                Exit Query
               </button>
             </div>
           </div>
@@ -328,24 +278,42 @@
         <div class="mt-6">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-lg font-medium">Vendors</h3>
-              <div class="flex items-center space-x-2">
-                <span class="text-sm text-gray-600">
-                  Page {{ currentVendorPage }} of {{ totalVendorPages }}
-                </span>
-                <button
-                  v-if="currentVendorPage < totalVendorPages"
-                  @click="nextVendorPage"
-                  class="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"
-                >
-                  &#8250;
-                </button>
-                <button
-                  v-if="currentVendorPage > 1"
-                  @click="prevVendorPage"
-                  class="px-3 py-1 text-sm bg-gray-500 hover:bg-gray-600 text-white rounded"
-                >
-                  &#8249;
-                </button>
+              <div class="flex items-center space-x-4">
+                <!-- Vendor management buttons (show when in query mode or when data is loaded) -->
+                <div v-if="isQueryMode || (form.partNo && form.partName)" class="flex items-center space-x-2">
+                  <button
+                    @click="addVendorLine"
+                    class="px-3 py-1 text-sm bg-green-500 hover:bg-green-600 text-white rounded"
+                  >
+                    + Add
+                  </button>
+                  <button
+                    @click="removeSelectedVendor"
+                    :disabled="!selectedVendorIndex"
+                    class="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  >
+                    - Remove
+                  </button>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="text-sm text-gray-600">
+                    Page {{ currentVendorPage }} of {{ totalVendorPages }}
+                  </span>
+                  <button
+                    v-if="currentVendorPage < totalVendorPages"
+                    @click="nextVendorPage"
+                    class="px-3 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded"
+                  >
+                    &#8250;
+                  </button>
+                  <button
+                    v-if="currentVendorPage > 1"
+                    @click="prevVendorPage"
+                    class="px-3 py-1 text-sm bg-gray-500 hover:bg-gray-600 text-white rounded"
+                  >
+                    &#8249;
+                  </button>
+                </div>
               </div>
             </div>
             
@@ -379,13 +347,13 @@
                           v-model="vendor.code"
                           placeholder="Enter vendor code"
                           :classes="{ input: 'border-0 shadow-none flex-1' }"
-                          :readonly="!isEditMode && !isQueryMode"
+                          :readonly="!isEditMode && !isQueryMode && !(form.partNo && form.partName)"
                         />
                         <button
                           type="button"
                           @click="openVendorModal(index)"
                           class="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          :disabled="!isEditMode && !isQueryMode"
+                          :disabled="!isEditMode && !isQueryMode && !(form.partNo && form.partName)"
                         >
                           F9
                         </button>
@@ -397,7 +365,7 @@
                         v-model="vendor.name"
                         placeholder="Enter vendor name"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        :readonly="!isEditMode && !isQueryMode"
+                        :readonly="!isEditMode && !isQueryMode && !(form.partNo && form.partName)"
                       />
                 </td>
                     <td class="px-4 py-3 border-b">
@@ -407,14 +375,14 @@
                         placeholder="0"
                         step="0.01"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        :readonly="!isEditMode && !isQueryMode"
+                        :readonly="!isEditMode && !isQueryMode && !(form.partNo && form.partName)"
                       />
                 </td>
                     <td class="px-4 py-3 text-center border-b">
                       <input 
                         v-model="vendor.preferred" 
                         type="checkbox" 
-                        :disabled="!isEditMode && !isQueryMode"
+                        :disabled="!isEditMode && !isQueryMode && !(form.partNo && form.partName)"
                         class="w-4 h-4 text-primary border-gray-400 rounded focus:ring-primary"
                       />
                     </td>
@@ -424,7 +392,7 @@
                         v-model="vendor.modelCode"
                         placeholder="Enter model code"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        :readonly="!isEditMode && !isQueryMode"
+                        :readonly="!isEditMode && !isQueryMode && !(form.partNo && form.partName)"
                       />
                 </td>
                     <td class="px-4 py-3 border-b">
@@ -433,7 +401,7 @@
                         v-model="vendor.qty"
                         placeholder="0"
                         :classes="{ input: 'border-0 shadow-none' }"
-                        :readonly="!isEditMode && !isQueryMode"
+                        :readonly="!isEditMode && !isQueryMode && !(form.partNo && form.partName)"
                       />
                 </td>
               </tr>
@@ -444,12 +412,12 @@
 
   
         <!-- Action Buttons -->
-          <div class="flex justify-end space-x-4 pt-6 border-t">
+          <div class="flex justify-center space-x-4 pt-6 border-t">
             <rs-button
               variant="secondary-outline"
-              @click="handleClose"
+              @click="handleCancel"
             >
-              Close
+              Cancel
             </rs-button>
             <rs-button
               variant="info"
@@ -461,7 +429,7 @@
               variant="success"
               @click="handleSave"
             >
-              {{ isQueryMode ? 'Save & Exit Query' : 'Save' }}
+              {{ isQueryMode ? 'Save' : 'Save' }}
             </rs-button>
         </div>
       </div>
@@ -1315,8 +1283,9 @@ const handleKeyDown = (event) => {
   }
 };
 
-const handleClose = () => {
-  // Close the form (could navigate back or close modal)
+const handleCancel = () => {
+  // Reset form to empty state
+  resetForm();
 };
 
 const handleRefresh = () => {
@@ -1565,36 +1534,10 @@ const addVendorLine = () => {
   
 };
 
-const removeVendorLine = () => {
-  if (form.vendors.length > 1) { // Keep at least one vendor line
-    form.vendors.pop();
-    
-    // Clear selection if it was the last item
-    if (selectedVendorIndex.value >= form.vendors.length) {
-      selectedVendorIndex.value = null;
-    }
-    
-    // Adjust current page if needed
-    const newTotalPages = Math.ceil(form.vendors.length / vendorsPerPage);
-    if (currentVendorPage.value > newTotalPages) {
-      currentVendorPage.value = newTotalPages;
-    }
-    
-  } else {
-    if (typeof window !== 'undefined' && window.Swal) {
-      window.Swal.fire({
-        title: 'Cannot Remove',
-        text: 'At least one vendor line is required',
-        icon: 'warning',
-        confirmButtonText: 'OK'
-      });
-    }
-  }
-};
 
 // Vendor row selection functions
 const selectVendorRow = (index) => {
-  if (isQueryMode.value) {
+  if (isQueryMode.value || (form.partNo && form.partName)) {
     selectedVendorIndex.value = selectedVendorIndex.value === index ? null : index;
   }
 };
@@ -1689,16 +1632,44 @@ const loadCurrentPart = () => {
 
 // Navigation functions for query mode
 const nextPart = () => {
-  if (currentPartIndex.value < queryResults.value.length - 1) {
-    currentPartIndex.value++;
-    loadCurrentPart();
+  if (isQueryMode.value) {
+    if (currentPartIndex.value < queryResults.value.length - 1) {
+      currentPartIndex.value++;
+      loadCurrentPart();
+    }
+  } else {
+    // When not in query mode but data is loaded, navigate through all parts with data
+    const partsWithData = masterParts.value.filter(part => {
+      return part.vendors && part.vendors.length > 0 && 
+             part.vendors.some(vendor => vendor.code && vendor.name);
+    });
+    
+    const currentPartIndexInAll = partsWithData.findIndex(part => part.partNo === form.partNo);
+    if (currentPartIndexInAll < partsWithData.length - 1) {
+      const nextPart = partsWithData[currentPartIndexInAll + 1];
+      loadCompletePartData(nextPart);
+    }
   }
 };
 
 const prevPart = () => {
-  if (currentPartIndex.value > 0) {
-    currentPartIndex.value--;
-    loadCurrentPart();
+  if (isQueryMode.value) {
+    if (currentPartIndex.value > 0) {
+      currentPartIndex.value--;
+      loadCurrentPart();
+    }
+  } else {
+    // When not in query mode but data is loaded, navigate through all parts with data
+    const partsWithData = masterParts.value.filter(part => {
+      return part.vendors && part.vendors.length > 0 && 
+             part.vendors.some(vendor => vendor.code && vendor.name);
+    });
+    
+    const currentPartIndexInAll = partsWithData.findIndex(part => part.partNo === form.partNo);
+    if (currentPartIndexInAll > 0) {
+      const prevPart = partsWithData[currentPartIndexInAll - 1];
+      loadCompletePartData(prevPart);
+    }
   }
 };
 
