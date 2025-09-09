@@ -14,40 +14,48 @@ export default [
     description: "Apps & Pages",
     child: [
       {
-        title: "Masters",
-        icon: "ic:outline-insert-drive-file",
+        title: "Sales",
+        icon: "ic:outline-shopping-bag",
         child: [
           {
-            title: "Models",
-            path: "/Masters/models",
+            title: "Tenders",
+            path: "/Sales/tenders",
           },
           {
-            title: "Drivers",
-            path: "/Masters/drivers",
+            title: "Sales Enquiries",
+            path: "/Sales/sales-enquiries",
           },
           {
-            title: "Trade Plates",
-            path: "/Masters/trade-plates",
+            title: "Quotations",
+            path: "/Sales/quotations",
           },
           {
-            title: "Local Content Parts",
-            path: "/Masters/localContentParts",
+            title: "BVO Forms Issue",
+            path: "/Sales/bvo-forms-issue",
           },
           {
-            title: "Model Categories",
-            path: "/Masters/model-categories",
+            title: "Vehicle Orders",
+            path: "/Sales/vehicle-orders",
           },
           {
-            title: "Model Charges",
-            path: "/Masters/model-charges",
+            title: "Stock Allocation-VO",
+            path: "/Sales/stock-allo-vo",
           },
           {
-            title: "Model Groups",
-            path: "/Masters/model-groups",
+            title: "Documentation Clearance Request",
+            path: "/Sales/docu-clearance-req",
           },
           {
-            title: "Colors",
-            path: "/Masters/colors",
+            title: "Vehicle Invoices",
+            path: "/Sales/vehicle-invoices",
+          },
+          {
+            title: "Vehicle Invoices Cancellation",
+            path: "/Sales/vehicle-invoices-cancel",
+          },
+          {
+            title: "Vehicle Credit Note",
+            path: "/Sales/vehicle-credit-note",  
           },
         ],
       },
@@ -94,52 +102,6 @@ export default [
           {
             title: "Accessory Fitting Invoice",
             path: "/Procurement/accessory-fitting-invoice",
-          },
-        ],
-      },
-      {
-        title: "Sales",
-        icon: "ic:outline-shopping-bag",
-        child: [
-          {
-            title: "Tenders",
-            path: "/Sales/tenders",
-          },
-          {
-            title: "Sales Enquiries",
-            path: "/Sales/sales-enquiries",
-          },
-          {
-            title: "Quotations",
-            path: "/Sales/quotations",
-          },
-          {
-            title: "BVO Forms Issue",
-            path: "/Sales/bvo-forms-issue",
-          },
-          {
-            title: "Vehicle Orders",
-            path: "/Sales/vehicle-orders",
-          },
-          {
-            title: "Stock Allocation-VO",
-            path: "/Sales/stock-allo-vo",
-          },
-          {
-            title: "Documentation Clearance Request",
-            path: "/Sales/docu-clearance-req",
-          },
-          {
-            title: "Vehicle Invoices",
-            path: "/Sales/vehicle-invoices",
-          },
-          {
-            title: "Vehicle Invoices Cancellation",
-            path: "/Sales/vehicle-invoices-cancel",
-          },
-          {
-            title: "Vehicle Credit Note",
-            path: "/Sales/vehicle-credit-note",  
           },
         ],
       },
@@ -236,7 +198,7 @@ export default [
         ],
       },
       {
-        title: "Accounting",
+        title: "Finance",
         icon: "ic:outline-shopping-bag",
         child: [
           {
@@ -281,6 +243,71 @@ export default [
           },
         ],
       },
+      {
+        title: "Masters",
+        icon: "ic:outline-insert-drive-file",
+        child: [
+          {
+            title: "Models",
+            path: "/Masters/models",
+          },
+          {
+            title: "Drivers",
+            path: "/Masters/drivers",
+          },
+          {
+            title: "Trade Plates",
+            path: "/Masters/trade-plates",
+          },
+          {
+            title: "Local Content Parts",
+            path: "/Masters/localContentParts",
+          },
+          {
+            title: "Model Categories",
+            path: "/Masters/model-categories",
+          },
+          {
+            title: "Model Charges",
+            path: "/Masters/model-charges",
+          },
+          {
+            title: "Model Groups",
+            path: "/Masters/model-groups",
+          },
+          {
+            title: "Colors",
+            path: "/Masters/colors",
+          },
+        ],
+      },
+      {
+        title: "User Management",
+        icon: "ic:outline-people",
+        child: [
+          {
+            title: "Users",
+            path: "/UserManagement/users",
+          },
+          {
+            title: "Roles",
+            path: "/UserManagement/roles",
+          },
+          {
+            title: "Module Rights (Userwise)",
+            path: "/UserManagement/module-rights",
+          },
+          {
+            title: "Module Rights (Modulewise)",
+            path: "/UserManagement/module-rights-modulewise",
+          },
+        ],
+      },
+      
+     
+      
+      
+      
     ],
   },
   // {
