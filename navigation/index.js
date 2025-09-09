@@ -301,6 +301,10 @@ export default [
             title: "Module Rights (Modulewise)",
             path: "/UserManagement/module-rights-modulewise",
           },
+          {
+            title: "Reporting",
+            path: "/UserManagement/reporting",
+          },
         ],
       },
       

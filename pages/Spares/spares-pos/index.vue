@@ -1,6 +1,5 @@
 <template>
   <div>
-    <LayoutsBreadcrumb />
     <rs-card>
       <template #header>
         <div class="flex items-center space-x-2">
@@ -233,7 +232,7 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex justify-end space-x-4 pt-6 border-t">
+            <div class="flex justify-center space-x-4 pt-6 border-t">
               <rs-button
                 variant="secondary-outline"
                 @click="handleCancel"

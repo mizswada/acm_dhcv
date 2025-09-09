@@ -1,11 +1,10 @@
 <template>
   <div>
-    <LayoutsBreadcrumb />
     <rs-card>
       <template #header>
         <div class="flex">
           <Icon class="mr-2 flex justify-center" name="ic:outline-shopping-cart"></Icon>
-          CKD Purchase Order
+          CKD/CBU Purchase Order
         </div>
       </template>
       <template #body>
@@ -274,7 +273,7 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex justify-end space-x-4 pt-6 pb-4 pr-4 border-t border-[rgb(var(--border-color))]">
+            <div class="flex justify-center space-x-4 pt-6 pb-4 pr-4 border-t border-[rgb(var(--border-color))]">
               <rs-button variant="secondary-outline" @click="handleCancel">Cancel</rs-button>
               <rs-button variant="info" @click="handleRefresh">Refresh</rs-button>
               <rs-button variant="success" btn-type="submit">Save</rs-button>
